@@ -1,57 +1,90 @@
-d3.json("samples.json").then(data => {
-    var names = data.names;
+// Create function to pull data from "names" for dropdown // 
+d3.json("samples.json").then(numData => {
+    var names = numData.names;
     var dropdownMenu = d3.select("#selDataset");
-    names.forEach(item => {
-        var tag = dropdownMenu.append("option");
-        tag.text(item);
-        tag.attr("id", item);
+    names.forEach(idNum => {
+        var nums = dropdownMenu.append("option");
+        nums.text(idNum);
+        nums.attr("id", nums);
     })
-    init()
 });
 
+// Create function to pull data from "metadata" for demographics table (#sample-metadata) //
+function DemoTable(demographics) {
+    d3.json("samples.json").then((sampleMD) => {
+        var MData = sampleMD.metadata;
+        var dataID = MData.filter(Ddata => Ddata.id == demographics);
+        var htmlMD = d3.select("#sample-metadata").html("");
+        Object.entries(dataID[0]).forEach(([key, value]) => {
+            htmlMD.append("p").text(`${key}: ${value}`);
+        });
+    });
+}
 
-d3.json("samples.json").then(data => {
-    // Create dropdown function to hold ID #'s //
-    // Create an array to hold each data sample
-    var idNum = Object.values(data.names);
-    var Meta = Object.values(data.metadata);
-    // var samples = Object.values(samples.samples)
+    // Create function to pull data from "samples" for bar chart (#bar) // 
+    // "sample_value" => values for bar chart / "otu_ids" => labels / "otu_labels" => hovertext //
+    // function barchart(samples) {
+    //     d3.json("samples.json").then((sampData)=> {
+    //         var sampValue = sampData.samples;
+    //         var sampfilter = sampValue.filter(Sdata => Sdata.id == samples);
+    //         var htmlsampData = d3.select("#bar").html("");
 
-    function init() {
-        var data = [{
-            values: idNum,
-            labels: Meta,
-            type: "bar"
-        }];
+    //     })
+    // }
 
-        var layout = {
-            height: 600,
-            width: 800
+
+// function barChart (samps) {
+//     d3.json("samples.json").then((sampleBar) => {
+//         var sampValue = sampleBar.samples;
+//         var sampfilter = sampValue.filter(Sdata => Sdata.id == samps)[0];
+//         var htmlsampData = d3.select("#bar").html("");
+//         console.log(sampValue);
+
+        
+//             var barData =[{
+//                 values: sampValue,
+//                 labels: sampfilter,
+//                 type: "bar",
+//                 text: htmlsampData
+//             }];
+//             var layout = {
+//                 height: 600,
+//                 width: 800
+//             };
+//             Plotly.newPlot("bar", barData, layout)
+//             }
+//     );
+// }
+
+function barChart () {
+    d3.json("samples.json").then((sampleBar) => {
+        var slicedData = sampleBar.samples.slice([0]);
+        // var reversedData = slicedData.reverse(0);
+        console.log(slicedData);
+        let trace1 ={
+            x: slicedData.map(object => object.ids),
+            y: slicedData.map(object => object.otu_ids),
+            text: slicedData.map(object => object.otu_labels),
+            name: "Belly Button",
+            type: "bar",
+            orientation: "h"
         };
+        let traceData = [trace1];
+        let layout = {
+            title: "Belly Button Grossness",
+            height: 600,
+            width: 800,
+        };
+        Plotly.newPlot("bar", traceData, layout);
+    })
+}
 
-        Plotly.newPlot("bar", data, layout);
-    }   
-        // Create Bar Char // 
+// Defined OptionChanged to pass functions 
+function optionChanged(demoOption) {
 
-    // On change to the DOM, call getData()
-    d3.selectAll("#selDataset").on("changed", getData);
+    // Update metadata with newly selected sample
+    DemoTable(demoOption); 
+    // // Update charts with newly selected sample
+    barChart(demoOption)
+}
 
-    // Function called by DOM changes
-    function getData() {
-        var dropdownMenu = d3.select("#selDataset");
-        // Assign the value of the dropdown menu option to a variable
-        var dataset = dropdownMenu.property("value");
-       // Call function to update the chart
-        updatePlotly(dataset);
-    }
-    
-
-    d3.selectAll("#sample-metadata").on("changed", getData);
-
-    function getData() {
-        var demograpghics = d3.select("#sample-metadata");
-        var list = demograpghics.property("value");
-        updatePlotly(list);
-    }
-    init()
-});
