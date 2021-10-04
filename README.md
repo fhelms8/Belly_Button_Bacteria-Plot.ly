@@ -11,3 +11,18 @@ https://fhelms8.github.io/Plot.ly-BellyButton-Challenge/
 As always, 
 Thank you for stopping by and I encourage/welcome feedback.
 Have a wonderful day! 
+
+# Full webside 
+<img src=https://raw.githubusercontent.com/fhelms8/Plot.ly-BellyButton-Challenge/main/Images/full_page.png>
+
+# Dropdown Menu
+<img src=https://raw.githubusercontent.com/fhelms8/Plot.ly-BellyButton-Challenge/main/Images/dropdown_menu.png>
+
+# Demographics table 
+<img src=https://raw.githubusercontent.com/fhelms8/Plot.ly-BellyButton-Challenge/main/Images/demographics.png>
+
+# Bar Chart 
+<img src=https://raw.githubusercontent.com/fhelms8/Plot.ly-BellyButton-Challenge/main/Images/bar_chart.png>
+
+# Bubble Chart 
+<img src=https://raw.githubusercontent.com/fhelms8/Plot.ly-BellyButton-Challenge/main/Images/bubble_chart.png>
