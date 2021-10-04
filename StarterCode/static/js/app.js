@@ -21,50 +21,17 @@ function DemoTable(demographics) {
     });
 }
 
-    // Create function to pull data from "samples" for bar chart (#bar) // 
-    // "sample_value" => values for bar chart / "otu_ids" => labels / "otu_labels" => hovertext //
-    // function barchart(samples) {
-    //     d3.json("samples.json").then((sampData)=> {
-    //         var sampValue = sampData.samples;
-    //         var sampfilter = sampValue.filter(Sdata => Sdata.id == samples);
-    //         var htmlsampData = d3.select("#bar").html("");
+// Create Bar Chart Functions 
 
-    //     })
-    // }
-
-
-// function barChart (samps) {
-//     d3.json("samples.json").then((sampleBar) => {
-//         var sampValue = sampleBar.samples;
-//         var sampfilter = sampValue.filter(Sdata => Sdata.id == samps)[0];
-//         var htmlsampData = d3.select("#bar").html("");
-//         console.log(sampValue);
-
-        
-//             var barData =[{
-//                 values: sampValue,
-//                 labels: sampfilter,
-//                 type: "bar",
-//                 text: htmlsampData
-//             }];
-//             var layout = {
-//                 height: 600,
-//                 width: 800
-//             };
-//             Plotly.newPlot("bar", barData, layout)
-//             }
-//     );
-// }
-
-function barChart () {
+function barChart (bardata) {
     d3.json("samples.json").then((sampleBar) => {
-        var slicedData = sampleBar.samples.slice([0]);
-        // var reversedData = slicedData.reverse(0);
-        console.log(slicedData);
+        var slicedData = sampleBar.samples;
+        var idValue = slicedData.filter(IData => IData.id == bardata)[0];
+        d3.select('#bar').html("");
         let trace1 ={
-            x: slicedData.map(object => object.ids),
-            y: slicedData.map(object => object.otu_ids),
-            text: slicedData.map(object => object.otu_labels),
+            x: idValue.sample_values,
+            y: idValue.otu_ids.map(object => "OTU" + object),
+            text: idValue.otu_labels,
             name: "Belly Button",
             type: "bar",
             orientation: "h"
@@ -73,11 +40,13 @@ function barChart () {
         let layout = {
             title: "Belly Button Grossness",
             height: 600,
+            
             width: 800,
         };
         Plotly.newPlot("bar", traceData, layout);
     })
 }
+
 
 // Defined OptionChanged to pass functions 
 function optionChanged(demoOption) {
