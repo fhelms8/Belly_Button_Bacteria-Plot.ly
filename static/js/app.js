@@ -23,12 +23,12 @@ function DemoTable(demographics) {
 
 // Create Bar Chart Functions //
 
-function barChart(bardata) {
+function barChart (bardata) {
     d3.json("samples.json").then((sampleBar) => {
         var slicedData = sampleBar.samples;
         var idValue = slicedData.filter(IData => IData.id == bardata)[0];
         d3.select('#bar').html("");
-        let trace1 = {
+        let trace1 ={
             x: idValue.sample_values,
             y: idValue.otu_ids.map(object => "OTU" + object),
             text: idValue.otu_labels,
@@ -39,12 +39,12 @@ function barChart(bardata) {
         let traceData = [trace1];
         let layout = {
             height: 600,
-            width: 700,
+            width: 800,
         };
         Plotly.newPlot("bar", traceData, layout);
 
         // Create Bubble Chart //
-        var trace2 = {
+        var trace2 ={
             x: idValue.otu_ids.map(object => object),
             y: idValue.sample_values,
             text: idValue.otu_labels,
@@ -53,7 +53,7 @@ function barChart(bardata) {
                 color: idValue.sample_values,
                 size: idValue.sample_values,
                 opacity: idValue.sample_values
-            }
+            }            
         };
         var bubblechart = [trace2];
         var layout2 = {
@@ -73,7 +73,7 @@ function barChart(bardata) {
 function optionChanged(demoOption) {
 
     // Update metadata with newly selected sample
-    DemoTable(demoOption);
+    DemoTable(demoOption); 
     // // Update charts with newly selected sample
     barChart(demoOption)
 }
