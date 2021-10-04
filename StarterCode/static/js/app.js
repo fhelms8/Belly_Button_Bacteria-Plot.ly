@@ -21,7 +21,7 @@ function DemoTable(demographics) {
     });
 }
 
-// Create Bar Chart Functions 
+// Create Bar Chart Functions //
 
 function barChart (bardata) {
     d3.json("samples.json").then((sampleBar) => {
@@ -38,13 +38,34 @@ function barChart (bardata) {
         };
         let traceData = [trace1];
         let layout = {
-            title: "Belly Button Grossness",
             height: 600,
-            
             width: 800,
         };
         Plotly.newPlot("bar", traceData, layout);
-    })
+
+        // Create Bubble Chart //
+        var trace2 ={
+            x: idValue.otu_ids.map(object => object),
+            y: idValue.sample_values,
+            text: idValue.otu_labels,
+            mode: 'markers',
+            marker: {
+                color: idValue.sample_values,
+                size: idValue.sample_values,
+                opacity: idValue.sample_values
+            }            
+        };
+        var bubblechart = [trace2];
+        var layout2 = {
+            showlegend: false,
+            height: 600,
+            width: 1000,
+            xaxis: {
+                title: "OTU ID"
+            }
+        };
+        Plotly.newPlot("bubble", bubblechart, layout2);
+    });
 }
 
 
