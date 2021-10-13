@@ -6,6 +6,8 @@ d3.json("samples.json").then(numData => {
         var nums = dropdownMenu.append("option");
         nums.text(idNum);
         nums.attr("id", nums);
+        DemoTable(names[0]);
+        barChart(names[0]);
     })
 });
 
