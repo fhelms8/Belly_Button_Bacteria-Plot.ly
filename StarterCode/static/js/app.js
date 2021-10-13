@@ -1,16 +1,18 @@
 // Create function to pull data from "names" for dropdown // 
-d3.json("samples.json").then(numData => {
-    var names = numData.names;
-    console.log(names[0]);
-    var dropdownMenu = d3.select("#selDataset");
-    names.forEach(idNum => {
-        var nums = dropdownMenu.append("option");
-        nums.text(idNum);
-        nums.attr("id", nums);
-        }) 
-        DemoTable(names[0]);
-        barChart(names[0]);
-});
+function init() {
+    d3.json("samples.json").then(numData => {
+        var names = numData.names;
+        console.log(names[0]);
+        var dropdownMenu = d3.select("#selDataset");
+        names.forEach(idNum => {
+            var nums = dropdownMenu.append("option");
+            nums.text(idNum);
+            nums.attr("id", nums);
+            }) 
+            DemoTable(names[0]);
+            barChart(names[0]);
+    });
+}  
 // Create function to pull data from "metadata" for demographics table (#sample-metadata) //
 function DemoTable(demographics) {
     d3.json("samples.json").then((sampleMD) => {
@@ -22,7 +24,7 @@ function DemoTable(demographics) {
         });
     });
 }
-
+// 
 // Create Bar Chart Functions //
 
 function barChart (bardata) {
